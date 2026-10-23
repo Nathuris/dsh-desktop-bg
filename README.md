@@ -54,6 +54,17 @@ cd "$PROFILE" && pnpm install
 
 装完重启 DSH。`cordis.patch.yml` 只做一次 `insert`，不替换任何官方服务，停用即恢复原状。
 
+## 从 GitHub 安装（推荐）
+
+```sh
+# profile 的 package.json 里加一条，再 pnpm install
+"desktop-bg": "github:Nathuris/dsh-desktop-bg#<commit-sha>"
+```
+
+`dsh.profile.bundles` 里同时要有 `desktop-bg`。用 `github:...#sha` 而不是 `file:` 是有原因的：桌面宿主的安装驱动每次启动都会重写 profile manifest，本地路径规格会被丢掉（实测：`file:./plugins/...` 在下次启动时从 dependencies 里消失），而 git 规格会保留。
+
+改完代码后：`git commit` → 把新 sha 写进 dependencies → `pnpm install` → 重启 DSH。
+
 ## 依赖与权限
 
 - 需要 DSH 已拿到 **辅助功能（Accessibility）** 权限。插件跑在 DSH 进程里，权限随主进程继承；`bg_probe` 的 `axTrusted` 就是这条检查。
