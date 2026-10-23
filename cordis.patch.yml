@@ -1,0 +1,6 @@
+# desktop-bg only contributes model-facing tools (bg_*). It replaces no
+# official service and inserts no UI entry, so disabling it simply removes
+# the tools again on the next load.
+- insert:
+    - id: desktop-bg
+      name: 'desktop-bg'
